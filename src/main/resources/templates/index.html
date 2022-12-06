@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>여기는 index공간입니다</h2>
+	<h1>추가함</h1>
+	<table id="venture">
+		<tr>
+			<th>번호</th>
+			<th>업체명</th>
+			<th>주소</th>
+			<th>업종분류</th>
+			<th>제품명</th>
+			<th>주생산품</th>
+		</tr>
+	</table>
+</body>
+<script
+src="https://code.jquery.com/jquery-3.6.1.js"
+integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+crossorigin="anonymous"
+></script>
+<script type="text/javascript">
+callMyAPI();
+function callMyAPI(){
+    $.ajax({
+  	 url: '/api/v1/venture',
+  	 type: 'GET',
+  	 dataType: 'json',
+  	 success: function (response){
+  		 for(var i in response){
+  			 var html = "<tr><td>"+response[i].num+"</td><td>"+response[i].company+"</td><td>"+response[i].addr+"</td><td>"+response[i].category.trim()+"</td><td>"+response[i].business_name.trim()+"</td><td>"+response[i].product.trim()+"</td></tr>";
+  			 $("#venture").append(html);
+  		 }
+  	 	}
+    })
+}
+</script>
+</html>
