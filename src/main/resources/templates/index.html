@@ -3,10 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+ul{
+  list-style: none;
+  display: inline-flex
+}
+ul li{
+	width: 30px;
+	cursor: pointer;
+}
+</style>
 </head>
 <body>
-	<h2>여기는 index공간입니다</h2>
-	<h1>추가함</h1>
+	<h2>벤처기업 현황</h2>
+	<div>
+		<select id="s_menu">
+			<option value="com">업체명</option>
+			<option value="addr">주소</option>
+			<option value="category">업종분류</option>
+			<option value="business">제품명</option>
+			<option value="product">주생산품</option>
+		</select>
+		<input id="search" type="text">
+		<button type="button" onclick="doSearch()">검색</button>
+	</div>
 	<table id="venture">
 		<tr>
 			<th>번호</th>
@@ -17,6 +52,20 @@
 			<th>주생산품</th>
 		</tr>
 	</table>
+	<div>
+		<ul>
+			<li onclick="callVenture(0)">1</li>
+			<li onclick="callVenture(20)">2</li>
+			<li onclick="callVenture(40)">3</li>
+			<li onclick="callVenture(60)">4</li>
+			<li onclick="callVenture(80)">5</li>
+			<li onclick="callVenture(100)">6</li>
+			<li onclick="callVenture(120)">7</li>
+			<li onclick="callVenture(140)">8</li>
+			<li onclick="callVenture(160)">9</li>
+			<li onclick="callVenture(180)">10</li>
+		</ul>
+	</div>
 </body>
 <script
 src="https://code.jquery.com/jquery-3.6.1.js"
@@ -24,7 +73,21 @@ integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
 crossorigin="anonymous"
 ></script>
 <script type="text/javascript">
-callMyAPI();
+callVenture(0);
+function callVenture(idx){
+	$('td').remove();
+    $.ajax({
+  	 url: '/api/v1/venture/'+idx,
+  	 type: 'GET',
+  	 dataType: 'json',
+  	 success: function (response){
+  		 for(var i in response){
+  			 var html = "<tr><td>"+response[i].num+"</td><td>"+response[i].company+"</td><td>"+response[i].addr+"</td><td>"+response[i].category.trim()+"</td><td>"+response[i].business_name.trim()+"</td><td>"+response[i].product.trim()+"</td></tr>";
+  			 $("#venture").append(html);
+  		 }
+  	 	}
+    })
+}
 function callMyAPI(){
     $.ajax({
   	 url: '/api/v1/venture',
@@ -37,6 +100,44 @@ function callMyAPI(){
   		 }
   	 	}
     })
+}
+
+function doSearch(){
+	if($('#search').val() == ''){
+		alert('검색어를 입력해주세요!');
+		return false;
+	}
+	$('td').remove();
+	var s_menu = $('#s_menu').val();
+	var search = $('#search').val();
+	var url = '/api/v1/venture/search/%25'+search+'%25';
+	
+	switch(s_menu){
+		case 'com':
+			break;
+		case 'addr':
+			break;
+		case 'category':
+			break;
+		case 'business':
+			break;
+		case 'product':
+			break;
+	}
+	
+	
+	
+	$.ajax({
+	  	 url: url,
+	  	 type: 'GET',
+	  	 dataType: 'json',
+	  	 success: function (response){
+	  		 for(var i in response){
+	  			 var html = "<tr><td>"+response[i].num+"</td><td>"+response[i].company+"</td><td>"+response[i].addr+"</td><td>"+response[i].category.trim()+"</td><td>"+response[i].business_name.trim()+"</td><td>"+response[i].product.trim()+"</td></tr>";
+	  			 $("#venture").append(html);
+	  		 }
+	  	 	}
+	    })
 }
 </script>
 </html>

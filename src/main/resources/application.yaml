@@ -1,0 +1,22 @@
+### MYSQL 
+#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+#spring.datasource.url=jdbc:mysql://localhost:3306/dw_501
+#spring.datasource.username=root
+#spring.datasource.password=toor
+#
+### Mybatis SQL
+#mybatis.mapper-locations=classpath:/sqlmap/sql.xml
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dw_501
+    username: root
+    password: toor
+    
+mybatis:
+  mapper-locations: classpath:/sqlmap/sql.xml
+#  jpa:
+#    database: mysql
+#    hibernate:
+#      ddl-auto: create

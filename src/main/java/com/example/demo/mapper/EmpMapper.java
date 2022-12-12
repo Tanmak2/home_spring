@@ -17,4 +17,8 @@ public interface EmpMapper {
 	 */
 	public List<venture> select_venture();
 	
+	public List<venture> selectVentureFindByColumnData(String data);
+	
+	public List<venture> select_venture_list(int index);
+	
 }
