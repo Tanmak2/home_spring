@@ -14,9 +14,8 @@ spring:
     username: root
     password: toor
     
-mybatis:
-  mapper-locations: classpath:/sqlmap/sql.xml
-#  jpa:
-#    database: mysql
-#    hibernate:
-#      ddl-auto: create
+  jpa:
+    database: mysql
+    generate-ddl: true
+    hibernate.ddl.auto: update
+    show-sql: true

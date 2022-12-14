@@ -3,33 +3,27 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.VO.venture;
-import com.example.demo.service.EmpService;
+import com.example.demo.model.Venture;
+import com.example.demo.repository.VentureRepo;
 
 @RestController
 public class ApiController {
 	
 	@Autowired
-	EmpService service;
-
+	VentureRepo repo;
+	
 	@GetMapping("/api/v1/venture")
-	public List<venture> callVenture(){
-		return service.select_venture();
+	public List<Venture> callVenture() {
+		return repo.findAll();
 	}
 	
-	@GetMapping("/api/v1/venture/search/{data}")
-	public List<venture> searchVentureByCompany(@PathVariable String data){
-		return service.selectVentureFindByColumnData(data);
-	}
-	
-	@GetMapping("/api/v1/venture/{index}")
-	public List<venture> select_venture_list(@PathVariable int index){
-		return service.select_venture_list(index);
+	@GetMapping("/api/v1/venture/paging")
+	public List<Venture> callPageVenture(Pageable pageable){
+		return repo.findAll(pageable).getContent();
 	}
 	
 }
